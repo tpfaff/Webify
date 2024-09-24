@@ -1,0 +1,15 @@
+package org.jetbrains.greeting.responses
+
+import kotlinx.serialization.Serializable
+import org.jetbrains.greeting.responses.Item
+
+@Serializable
+data class Tracks(
+    val href: String,
+    val items: List<Item>,
+    val limit: Int,
+    val next: String?,
+    val offset: Int,
+   // val previous: Any,
+    val total: Int
+)
