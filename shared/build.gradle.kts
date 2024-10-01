@@ -35,6 +35,7 @@ kotlin {
                 implementation(libs.ktor.ktor.client.json)
                 implementation(libs.ktor.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.okio) // Use the latest stable version
             }
         }
         val androidMain by getting {
@@ -63,4 +64,7 @@ android {
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
+}
+dependencies {
+    implementation("androidx.room:room-common:2.6.1")
 }

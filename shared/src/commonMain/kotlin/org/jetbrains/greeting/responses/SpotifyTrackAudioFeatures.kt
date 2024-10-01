@@ -3,6 +3,10 @@ package org.jetbrains.greeting.responses
 
 import kotlinx.serialization.Serializable
 
+abstract class ITrackAudioAnalysis{
+    abstract val track: Track
+}
+
 @Serializable
 data class TrackAudioAnalysis(
     val bars: List<Bar>,
@@ -11,8 +15,8 @@ data class TrackAudioAnalysis(
     val sections: List<Section>,
     val segments: List<Segment>,
     val tatums: List<Tatum>,
-    val track: Track
-)
+    override val track: Track
+): ITrackAudioAnalysis()
 
 @Serializable
 data class Bar(
@@ -92,7 +96,7 @@ data class Track(
     @Serializable(with = ModeSerializer::class)
     var mode: MusicalMode,
     val mode_confidence: Double,
-    val num_samples: Int,
+    override val num_samples: Int,
     val offset_seconds: Int,
     val rhythm_version: Float,
     val rhythmstring: String,
@@ -106,4 +110,8 @@ data class Track(
     val time_signature_confidence: Double,
     val window_seconds: Int,
     var originalMode: MusicalMode? = null,
-)
+): ITrack()
+
+abstract class ITrack {
+    abstract val num_samples: Int
+}
