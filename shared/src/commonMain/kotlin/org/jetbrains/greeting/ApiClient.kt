@@ -163,9 +163,6 @@ class ApiClient private constructor() {
         return try {
             val token = TokenProvider.instance.getToken()
             val result = client.get(baseUrl) {
-                headers {
-                    append("Authorization", "Bearer $token")
-                }
                 parameter("q", "track: $trackQuery")
                 parameter("type", "track")
             }
