@@ -12,6 +12,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -21,6 +23,7 @@ import org.jetbrains.greeting.responses.Item
 import org.jetbrains.greeting.responses.Track
 import org.jetbrains.greeting.responses.Tracks
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 @Preview
 fun App(searchResults: List<Item>) {
@@ -35,6 +38,7 @@ fun App(searchResults: List<Item>) {
                 LazyColumn{
                     items(searchResults){
                         Text(it.name)
+                        GlideImage(it.album.images.first().url, "")
                     }
                 }
             }

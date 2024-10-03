@@ -1,5 +1,7 @@
 package org.jetbrains.greeting.responses
 
+import io.github.aakira.napier.Napier
+
 
 enum class MusicalKey(val value: Int) {
     UNKNOWN(-1),
@@ -73,7 +75,7 @@ enum class MusicalKey(val value: Int) {
             MusicalMode.MINOR to MusicalMode.MAJOR -> 0
             MusicalMode.MINOR to MusicalMode.MINOR -> -3
             else -> {
-                 println("Unknown mode combination")
+                 Napier.d("Unknown mode combination")
                 0
             }
         }

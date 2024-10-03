@@ -36,6 +36,13 @@ kotlin {
                 implementation(libs.ktor.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.okio) // Use the latest stable version
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.ktor.client.auth)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.napier)
+
             }
         }
         val androidMain by getting {
