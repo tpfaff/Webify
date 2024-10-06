@@ -84,15 +84,6 @@ enum class MusicalKey(val value: Int) {
     companion object {
 //        entries: This is a built-in method for enums in Kotlin, returning an array of all enum constants.
 //        associateBy(PitchClass::value): This function creates a map where the keys are the integer values (value property of the MusicalKey
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //        )
 //        and the values are the corresponding enum instances.
 //        Essentially, it maps each integer (from -1 to 11) to its corresponding PitchClass.
         private val map = entries.associateBy(MusicalKey::value)

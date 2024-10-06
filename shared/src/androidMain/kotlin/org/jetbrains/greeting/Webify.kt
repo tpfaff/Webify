@@ -1,19 +1,18 @@
 package org.jetbrains.greeting
 
 import android.app.Application
-import android.content.Context
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
-import org.jetbrains.greeting.responses.AccessToken
 import org.jetbrains.greeting.responses.SpotifySearchResult
+import org.jetbrains.greeting.responses.TrackAudioAnalysis
 
 
-class Webify : ApiClientInterface {
+public class Webify : ApiClientInterface {
 
     private lateinit var clientId: String
     private lateinit var clientSecret: String
 
-    companion object {
+    public companion object {
         private lateinit var instance: Webify
 
 
@@ -24,19 +23,32 @@ class Webify : ApiClientInterface {
         //doesn't want to have to have injectable resources for this
         //i.e. in a place where you are init'ing with the context
         //i.e. likely to be in App or Activity etc
-        fun init(context: Application, clientId: String, clientSecret: String): Webify {
+        public fun init(context: Application, clientId: String, clientSecret: String): Webify {
+
+            require(clientId.isNotEmpty()) { "Client ID cannot be empty" }
+            require(clientSecret.isNotEmpty()) { "Client secret cannot be empty" }
+
             ContextProvider.getInstance().setContext(context)
             Napier.base(DebugAntilog())
+
             ApiClient
                 .getInstance()
                 .init(clientId, clientSecret)
-            return getInstance().apply {
+
+            return initInstance().apply {
                 this.clientId = clientId
                 this.clientSecret = clientSecret
             }
         }
 
-        private fun getInstance(): Webify {
+        public fun getInstance(): Webify{
+            if (!::instance.isInitialized) {
+                throw IllegalStateException("Webify has not been initialized, call init() first")
+            }
+            return instance
+        }
+
+        private fun initInstance(): Webify {
             if (!::instance.isInitialized) {
                 instance = Webify()
             }
@@ -44,12 +56,27 @@ class Webify : ApiClientInterface {
         }
     }
 
-    override suspend fun searchForTrack(trackQuery: String): ApiResult<SpotifySearchResult> {
+    override suspend fun searchForTrack(trackQuery: String): Result<SpotifySearchResult> {
         return ApiClient.getInstance().searchForTrack(trackQuery)
     }
 
-    fun enableNetworkLogging(enable: Boolean) {
-
+    override suspend fun getTrackAnalysis(trackId: String): Result<TrackAudioAnalysis> {
+        return ApiClient.getInstance().getTrackAnalysis(trackId)
     }
+}
 
+/**
+ * Network logging is enabled by default
+ */
+public fun Webify.enableNetworkLogging(): Webify {
+
+    return this
+}
+
+/**
+ * Network logging is enabled by default
+ */
+public fun Webify.disableNetworkLogging(): Webify {
+
+    return this
 }

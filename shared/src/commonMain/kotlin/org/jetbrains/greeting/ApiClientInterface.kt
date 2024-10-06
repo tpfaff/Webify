@@ -1,8 +1,9 @@
 package org.jetbrains.greeting
 
-import org.jetbrains.greeting.responses.AccessToken
 import org.jetbrains.greeting.responses.SpotifySearchResult
+import org.jetbrains.greeting.responses.TrackAudioAnalysis
 
-interface ApiClientInterface {
-    suspend fun searchForTrack(trackQuery: String): ApiResult<SpotifySearchResult>
+internal interface ApiClientInterface {
+    suspend fun searchForTrack(trackQuery: String): Result<SpotifySearchResult>
+    suspend fun getTrackAnalysis(trackId: String): Result<TrackAudioAnalysis>
 }

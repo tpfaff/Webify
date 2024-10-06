@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.greeting.responses.Item
 
 @Serializable
-data class Tracks(
+public data class Tracks(
     val href: String,
     val items: List<Item>,
     val limit: Int,

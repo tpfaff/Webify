@@ -26,6 +26,8 @@ kotlin {
         }
     }
 
+    explicitApiWarning()
+
     val ktorVersion = "3.0.0-rc-1"
     sourceSets {
         val commonMain by getting {
