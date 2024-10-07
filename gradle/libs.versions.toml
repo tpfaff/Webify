@@ -20,8 +20,10 @@ kotlinxDatetime = "0.4.0"
 ktorVersion = "3.0.0-rc-1"
 napier = "2.7.1"
 okio = "3.9.0"
+roomCommon = "2.6.1"
 
 [libraries]
+androidx-room-common = { module = "androidx.room:room-common", version.ref = "roomCommon" }
 compose = { module = "com.github.bumptech.glide:compose", version.ref = "compose" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

@@ -8,11 +8,11 @@ internal class ContextProvider {
 
     private lateinit var context: Application
 
-    fun setContext(context: Application) {
+    internal fun setContext(context: Application) {
         this.context = context
     }
 
-    fun getContext(): Context {
+    internal fun getContext(): Context {
         return context
     }
 

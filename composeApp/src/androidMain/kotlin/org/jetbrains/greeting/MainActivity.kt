@@ -15,19 +15,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 
-
         val app = this.applicationContext as Application
-        val webify = Webify
-            .init(
-                app,
-                clientId = "",
-                clientSecret = ""
-            )
-            .enableNetworkLogging()
-
+        Webify.getInstance()
+            .setClientId("")
+            .setClientSecret("")
+            .init(app)
 
         lifecycleScope.launch {
-            val result = webify.searchForTrack("Imagine Dragons")
+            val result = Webify.getInstance().searchForTrack("Imagine Dragons")
             setContent {
                 if (result.isSuccess) {
                     result.map { data ->

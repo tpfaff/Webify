@@ -4,5 +4,5 @@ import okio.Path
 import okio.Path.Companion.toPath
 
 actual fun getApplicationDataDirectory(): Path {
-    return ContextProvider.getInstance().getContext().filesDir.absolutePath.toPath()
+    return org.jetbrains.greeting.ContextProvider.getInstance().getContext().filesDir.absolutePath.toPath()
 }

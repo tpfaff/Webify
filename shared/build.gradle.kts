@@ -28,7 +28,6 @@ kotlin {
 
     explicitApiWarning()
 
-    val ktorVersion = "3.0.0-rc-1"
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -51,7 +50,8 @@ kotlin {
             dependencies {
                 // Ktor client for Android
                 implementation(libs.ktor.ktor.client.okhttp) // You can choose OkHttp or another engine.
-              //  implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                implementation(libs.androidx.room.common)
+                //  implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
             }
         }
 //        val iosMain by getting {
@@ -74,6 +74,4 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
 }
-dependencies {
-    implementation("androidx.room:room-common:2.6.1")
-}
+

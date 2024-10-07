@@ -40,9 +40,9 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  */
 
 //todo why out?
-sealed class ApiResult<out T> {
+sealed class ApiResult<in T> {
     //how does output and input with <out> ?
-    data class Success<out T>(val data: T) : ApiResult<T>()
+    data class Success<T>(val data: T) : ApiResult<T>()
     data class Error(val exception: Throwable) : ApiResult<Nothing>()
 
     fun isSuccess(): Boolean {
@@ -59,11 +59,16 @@ public class ApiClient private constructor() {
 
     //todo builder that forces clientid and secret?
 
-    public fun init(clientId: String, clientSecret: String, logLevel: LogLevel = LogLevel.ALL) {
+    internal fun init(clientId: String, clientSecret: String, logLevel: LogLevel = LogLevel.ALL) {
         this.clientId = clientId
         this.clientSecret = clientSecret
         this.logLevel = logLevel
         initHttpClient()
+    }
+
+    public fun ApiClient.setCredentials(clientId: String, clientSecret: String){
+        this.clientId = clientId
+        this.clientSecret = clientSecret
     }
 
     private fun initHttpClient() {
@@ -171,7 +176,6 @@ public class ApiClient private constructor() {
 //        }
 //    }
 
-    //todo how does this return type work when ApiResult.Error is allowed to be returned?
     public suspend fun searchForTrack(trackQuery: String): Result<SpotifySearchResult> {
         return try {
             val result = client.get("$baseUrl/search") {
@@ -200,13 +204,7 @@ private suspend inline fun <reified T> HttpResponse.toApiResult(): Result<T> {
     //to that type simply by us returning that type
     return Result.success(this.body())
 }
-//private suspend inline fun <reified T> HttpResponse.toApiResult(): ApiResult<T> {
-//    if (this.status.value != 200) {
-//        Napier.e(this.bodyAsText())
-//        return ApiResult.Error(Exception(this.bodyAsText()))
-//    }
-//
-//    //reified because we need to know what the return type actually is at runtime, because it will map this.body()
-//    //to that type simply by us returning that type
-//    return ApiResult.Success(this.body())
-//}
+
+
+internal expect fun initializeApiClient(clientId: String, clientSecret: String)
+
