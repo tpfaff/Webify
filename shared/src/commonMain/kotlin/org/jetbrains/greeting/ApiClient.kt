@@ -39,16 +39,8 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  * Only regular properties, overrides, and overloaded operators should be declared as members by default.
  */
 
-//todo why out?
-sealed class ApiResult<in T> {
-    //how does output and input with <out> ?
-    data class Success<T>(val data: T) : ApiResult<T>()
-    data class Error(val exception: Throwable) : ApiResult<Nothing>()
 
-    fun isSuccess(): Boolean {
-        return this is Success
-    }
-}
+
 
 public class ApiClient private constructor() {
     private val baseUrl = "https://api.spotify.com/v1"
@@ -66,13 +58,14 @@ public class ApiClient private constructor() {
         initHttpClient()
     }
 
+
     public fun ApiClient.setCredentials(clientId: String, clientSecret: String){
         this.clientId = clientId
         this.clientSecret = clientSecret
     }
 
     private fun initHttpClient() {
-        client = HttpClient(CIO) {
+        client = HttpClient(httpClientEngine()) {
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true
@@ -111,7 +104,6 @@ public class ApiClient private constructor() {
             return instance
         }
     }
-
 
     /***
      * Gets an access token from spotify.

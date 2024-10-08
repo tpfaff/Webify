@@ -2,9 +2,10 @@ package org.jetbrains.greeting
 
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
+import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.engine.darwin.Darwin
 import okio.Path
-import org.jetbrains.greeting.Webify.Companion.initInstance
-import org.jetbrains.greeting.Webify.Companion.instance
+import okio.Path.Companion.toPath
 import platform.Foundation.*
 
 
@@ -21,10 +22,12 @@ actual fun getApplicationDataDirectory(): Path {
 
 public fun Webify.init(): Webify {
     Napier.base(DebugAntilog())
-
     ApiClient.getInstance()
         .init(clientId, clientSecret)
 
     return this
 }
 
+public actual fun httpClientEngine(): HttpClientEngineFactory<*> {
+    return Darwin
+}

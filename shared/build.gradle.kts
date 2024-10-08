@@ -15,14 +15,27 @@ kotlin {
         }
     }
     
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "Shared"
-            isStatic = true
+//    listOf(
+//        iosX64(),
+//        iosArm64(),
+//        iosSimulatorArm64()
+//    ).forEach { iosTarget ->
+//        iosTarget.binaries.framework {
+//            baseName = "Shared"
+//            isStatic = true
+//        }
+//    }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    ios() { // Define a common iOS target
+        binaries {
+            framework {
+                baseName = "Shared"
+                isStatic = true
+            }
         }
     }
 
@@ -43,7 +56,6 @@ kotlin {
                 implementation(libs.ktor.client.auth)
                 implementation(libs.ktor.client.logging)
                 implementation(libs.napier)
-
             }
         }
         val androidMain by getting {
@@ -54,12 +66,13 @@ kotlin {
                 //  implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
             }
         }
-//        val iosMain by getting {
-//            dependencies {
-//                // Ktor client for iOS
-//                implementation("io.ktor:ktor-client-ios:2.x.x")
-//            }
-//        }
+        val iosMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                // Ktor client for iOS
+                implementation(libs.ktor.client.darwin)
+            }
+        }
     }
 }
 
