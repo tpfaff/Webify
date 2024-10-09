@@ -4,23 +4,31 @@ package org.jetbrains.greeting
 import org.jetbrains.greeting.responses.SpotifySearchResult
 import org.jetbrains.greeting.responses.TrackAudioAnalysis
 
+public expect class WebifyBuilder(): WebifyBuilderBase<WebifyBuilder>{
+    public fun build(): Webify
+}
+
 
 public class Webify : ApiClientInterface {
 
     internal lateinit var clientId: String
     internal lateinit var clientSecret: String
+    public
 
-    public companion object {
+    companion object {
         private lateinit var instance: Webify
+        public fun Builder(): WebifyBuilder {
+            return WebifyBuilder()
+        }
 
         public fun getInstance(): Webify {
             if (!Companion::instance.isInitialized) {
-                initInstance()
+                throw Exception("Use the Webify.Builder() to create an instance of Webify before calling Webify.getInstance()")
             }
             return instance
         }
 
-        internal fun initInstance(): Webify {
+        internal fun createInstance(): Webify {
             if (!Companion::instance.isInitialized) {
                 instance = Webify()
             }
@@ -54,13 +62,11 @@ public fun Webify.disableNetworkLogging(): Webify {
 }
 
 public fun Webify.setClientId(clientId: String): Webify {
-    require(clientId.isNotEmpty()) { "Client ID cannot be empty" }
     this.clientId = clientId
     return this
 }
 
 public fun Webify.setClientSecret(clientSecret: String): Webify {
-    require(clientSecret.isNotEmpty()) { "Client secret cannot be empty" }
     this.clientSecret = clientSecret
     return this
 }

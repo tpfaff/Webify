@@ -16,10 +16,11 @@ class MainActivity : ComponentActivity() {
 
 
         val app = this.applicationContext as Application
-        Webify.getInstance()
-            .setClientId("")
-            .setClientSecret("")
-            .init(app)
+        val webify = Webify.Builder()
+            .clientId("")
+            .clientSecret("")
+            .applicationContext(app)
+            .build()
 
         lifecycleScope.launch {
             val result = Webify.getInstance().searchForTrack("Imagine Dragons")

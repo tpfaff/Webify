@@ -39,9 +39,6 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  * Only regular properties, overrides, and overloaded operators should be declared as members by default.
  */
 
-
-
-
 public class ApiClient private constructor() {
     private val baseUrl = "https://api.spotify.com/v1"
     private lateinit var client: HttpClient

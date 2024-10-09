@@ -24,7 +24,6 @@ public fun Webify.init(): Webify {
     Napier.base(DebugAntilog())
     ApiClient.getInstance()
         .init(clientId, clientSecret)
-
     return this
 }
 
