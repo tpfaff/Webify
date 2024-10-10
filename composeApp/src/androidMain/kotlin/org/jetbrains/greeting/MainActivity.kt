@@ -16,7 +16,8 @@ class MainActivity : ComponentActivity() {
 
 
         val app = this.applicationContext as Application
-        val webify = Webify.Builder()
+        val webify =
+            Webify.Builder
             .clientId("")
             .clientSecret("")
             .applicationContext(app)

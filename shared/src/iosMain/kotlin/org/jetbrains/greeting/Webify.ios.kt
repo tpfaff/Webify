@@ -1,7 +1,7 @@
 package org.jetbrains.greeting
 
 
-public actual class WebifyBuilder : WebifyBuilderBase {
+public actual class WebifyBuilder : WebifyBuilderBase<WebifyBuilder> {
     override var clientId: String = ""
     override var clientSecret: String = ""
 

@@ -17,9 +17,7 @@ public class Webify : ApiClientInterface {
 
     companion object {
         private lateinit var instance: Webify
-        public fun Builder(): WebifyBuilder {
-            return WebifyBuilder()
-        }
+        public val Builder: WebifyBuilder = WebifyBuilder()
 
         public fun getInstance(): Webify {
             if (!Companion::instance.isInitialized) {
