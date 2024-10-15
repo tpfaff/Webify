@@ -47,24 +47,23 @@ public class Webify : ApiClientInterface {
  * Network logging is enabled by default
  */
 public fun Webify.enableNetworkLogging(): Webify {
-
+    ApiClient.getInstance().enableNetworkLogging()
     return this
 }
 
 /**
  * Network logging is enabled by default
  */
-public fun Webify.disableNetworkLogging(): Webify {
-
-    return this
+public fun Webify.disableNetworkLogging() {
+    ApiClient.getInstance().disableNetworkLogging()
 }
 
-public fun Webify.setClientId(clientId: String): Webify {
+internal fun Webify.setClientId(clientId: String): Webify {
     this.clientId = clientId
     return this
 }
 
-public fun Webify.setClientSecret(clientSecret: String): Webify {
+internal fun Webify.setClientSecret(clientSecret: String): Webify {
     this.clientSecret = clientSecret
     return this
 }

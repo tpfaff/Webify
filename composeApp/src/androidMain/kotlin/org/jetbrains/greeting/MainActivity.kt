@@ -18,13 +18,13 @@ class MainActivity : ComponentActivity() {
         val app = this.applicationContext as Application
         val webify =
             Webify.Builder
-            .clientId("")
-            .clientSecret("")
+            .clientId("d20648cd9e9c479a8d1e1c555e6cff76")
+            .clientSecret("ee225f0a5a1044cdb1ef2a94c8e31e60")
             .applicationContext(app)
             .build()
 
         lifecycleScope.launch {
-            val result = Webify.getInstance().searchForTrack("Imagine Dragons")
+            val result = webify.searchForTrack("Imagine Dragons")
             setContent {
                 if (result.isSuccess) {
                     result.map { data ->

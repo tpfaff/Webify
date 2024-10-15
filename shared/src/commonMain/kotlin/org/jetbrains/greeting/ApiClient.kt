@@ -55,6 +55,14 @@ public class ApiClient private constructor() {
         initHttpClient()
     }
 
+    internal fun disableNetworkLogging(){
+        init(this.clientId, this.clientSecret, LogLevel.NONE)
+    }
+
+    internal fun enableNetworkLogging(){
+        init(this.clientId, this.clientSecret, LogLevel.ALL)
+    }
+
 
     public fun ApiClient.setCredentials(clientId: String, clientSecret: String){
         this.clientId = clientId
@@ -68,7 +76,6 @@ public class ApiClient private constructor() {
                     ignoreUnknownKeys = true
                 })
             }
-
             install(Auth) {
                 bearer {
                     loadTokens {
@@ -150,21 +157,7 @@ public class ApiClient private constructor() {
         return encodedString
     }
 
-//    //todo how does this return type work when ApiResult.Error is allowed to be returned?
-//    public suspend fun searchForTrack(trackQuery: String): ApiResult<SpotifySearchResult> {
-//        return try {
-//            val result = client.get(baseUrl) {
-//                parameter("q", "track: $trackQuery")
-//                parameter("type", "track")
-//            }
-//
-//            return result.toApiResult()
-//        } catch (e: Exception) {
-//            Napier.e("Error while searching for track", e)
-//            ApiResult.Error(e)
-//        }
-//    }
-
+    //todo how does this return type work when ApiResult.Error is allowed to be returned?
     public suspend fun searchForTrack(trackQuery: String): Result<SpotifySearchResult> {
         return try {
             val result = client.get("$baseUrl/search") {
@@ -178,6 +171,7 @@ public class ApiClient private constructor() {
             Result.failure(e)
         }
     }
+
     public suspend fun getTrackAnalysis(trackId: String): Result<TrackAudioAnalysis> {
         return client.get("$baseUrl/audio-analysis/$trackId").toApiResult()
     }
