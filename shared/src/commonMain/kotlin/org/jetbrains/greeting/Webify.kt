@@ -1,6 +1,7 @@
 package org.jetbrains.greeting
 
 
+import org.jetbrains.greeting.responses.ArtistSearchResult
 import org.jetbrains.greeting.responses.SpotifySearchResult
 import org.jetbrains.greeting.responses.TrackAudioAnalysis
 
@@ -36,6 +37,10 @@ public class Webify : ApiClientInterface {
 
     override suspend fun searchForTrack(trackQuery: String): Result<SpotifySearchResult> {
         return ApiClient.getInstance().searchForTrack(trackQuery)
+    }
+
+    override suspend fun searchForArtist(artistQuery: String): Result<ArtistSearchResult> {
+        return ApiClient.getInstance().searchForArtist(artistQuery)
     }
 
     override suspend fun getTrackAnalysis(trackId: String): Result<TrackAudioAnalysis> {

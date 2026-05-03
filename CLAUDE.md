@@ -77,6 +77,18 @@ result.onSuccess { searchResult ->
 }
 ```
 
+### Search for Artists
+```kotlin
+val result = webify.searchForArtist("Paramore")
+result.onSuccess { searchResult ->
+    searchResult.artists.items.forEach { artist ->
+        println("${artist.name} - ${artist.genres.joinToString()}")
+        println("Followers: ${artist.followers?.total}")
+        println("Popularity: ${artist.popularity}")
+    }
+}
+```
+
 ### Get Audio Analysis
 ```kotlin
 val result = webify.getTrackAnalysis(trackId)
@@ -96,7 +108,8 @@ Uses **Client Credentials Flow** (server-to-server, no user auth):
 ## API Coverage
 
 ### Implemented
-- `GET /v1/search` - Track search
+- `GET /v1/search?type=track` - Track search
+- `GET /v1/search?type=artist` - Artist search
 - `GET /v1/audio-analysis/{id}` - Audio analysis
 
 ### Not Implemented

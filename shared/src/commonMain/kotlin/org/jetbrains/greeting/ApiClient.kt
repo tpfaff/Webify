@@ -28,6 +28,7 @@ import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import org.jetbrains.greeting.responses.AccessToken
 import org.jetbrains.greeting.responses.AccessTokenResponse
+import org.jetbrains.greeting.responses.ArtistSearchResult
 import org.jetbrains.greeting.responses.SpotifySearchResult
 import org.jetbrains.greeting.responses.TrackAudioAnalysis
 import kotlin.io.encoding.Base64
@@ -168,6 +169,20 @@ public class ApiClient private constructor() {
             return result.toApiResult()
         } catch (e: Exception) {
             Napier.e("Error while searching for track", e)
+            Result.failure(e)
+        }
+    }
+
+    public suspend fun searchForArtist(artistQuery: String): Result<ArtistSearchResult> {
+        return try {
+            val result = client.get("$baseUrl/search") {
+                parameter("q", "artist: $artistQuery")
+                parameter("type", "artist")
+            }
+
+            return result.toApiResult()
+        } catch (e: Exception) {
+            Napier.e("Error while searching for artist", e)
             Result.failure(e)
         }
     }
